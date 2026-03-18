@@ -13,7 +13,7 @@
         -webkit-appearance: none;
         margin: 0;
     }
-    input[type=number] { -moz-appearance: textfield; }
+    input[type=number] { -moz-appearance: textfield; appearance: textfield; }
 
     .sidebar {
         width: 220px;
