@@ -124,7 +124,8 @@
     /* ── Main content ── */
     .main-content {
         flex: 1;
-        padding: 36px 40px;
+        padding: 24px 28px;
+        min-width: 0;
     }
 
     .main-content h2 {
@@ -181,8 +182,7 @@
 
     <!-- Main Content Area -->
     <main class="main-content">
-        <h2>Welcome to EliteMart!</h2>
-        <p>Your one-stop shop for premium goods. Browse categories on the left to get started.</p>
+        <jsp:include page="products.jsp" />
     </main>
 
 </div>
