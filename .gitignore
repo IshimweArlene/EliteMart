@@ -1,28 +1,37 @@
+# ========================
+# Maven Build Output
+# ========================
 target/
+*.war
+*.jar
+*.class
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-.kotlin
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+# ========================
+# IntelliJ IDEA
+# ========================
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
-### Eclipse ###
+# ========================
+# Eclipse
+# ========================
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
 
-### NetBeans ###
+# ========================
+# NetBeans
+# ========================
 /nbproject/private/
 /nbbuild/
 /dist/
@@ -32,8 +41,36 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+# ========================
+# VS Code
+# ========================
 .vscode/
 
-### Mac OS ###
+# ========================
+# Windows
+# ========================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ========================
+# macOS
+# ========================
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# ========================
+# Logs & Temp Files
+# ========================
+*.log
+*.tmp
+*.temp
+*.swp
+
+# ========================
+# Tomcat / Jetty
+# ========================
+work/
+derby.log
