@@ -72,27 +72,66 @@
             text-decoration: none;
             font-size: 14px;
         }
+        .password-wrapper {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #cbd5f5;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
     <div class="register-card">
         <h2>Join EliteMart</h2>
-        <form>
+        <form action="RegisterServlet" method="POST" autocomplete="off">
+            <!-- Hidden dummy inputs to fool browser autofill -->
+            <input type="text" style="display:none;" name="fake_username"/>
+            <input type="password" style="display:none;" name="fake_password"/>
             <div class="form-group">
                 <label for="name">Full Name</label>
-                <input type="text" id="name" placeholder="Enter your full name" required>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Create a password" required>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                </div>
             </div>
             <button type="submit" class="btn-join">Register Now</button>
         </form>
+        <p style="margin-top: 20px; font-size: 14px; color: #cbd5f5;">
+            Already have an account? <a href="login.jsp" style="color: #38bdf8; text-decoration: none;">Login</a>
+        </p>
         <a href="index.jsp" class="back-link">← Back to Store</a>
     </div>
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.textContent = '🔒';
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+
+        // Force form reset on page load to clear any browser pre-fill
+        window.addEventListener('load', () => {
+            document.querySelector('form').reset();
+        });
+    </script>
 </body>
 </html>

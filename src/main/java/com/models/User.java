@@ -10,8 +10,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
+    private String fullName;
+
     @Column(nullable = false, unique = true)
-    private String username;
+    private String username; // We'll use email as username
 
     @Column(nullable = false)
     private String password;
@@ -22,7 +25,8 @@ public class User {
     // Constructors
     public User() {}
 
-    public User(String username, String password, String role) {
+    public User(String fullName, String username, String password, String role) {
+        this.fullName = fullName;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -30,6 +34,8 @@ public class User {
 
     // Getters & setters
     public int getId() { return id; }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public String getRole() { return role; }

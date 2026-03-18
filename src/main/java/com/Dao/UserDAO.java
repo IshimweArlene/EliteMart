@@ -1,7 +1,7 @@
-package com.Dao;
+package com.dao;
 
-import com.example.web.model.User;
-import com.example.web.util.HibernateUtil;
+import com.models.User;
+import com.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -11,7 +11,7 @@ public class UserDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        session.save(user);
+        session.persist(user);
 
         session.getTransaction().commit();
         session.close();
