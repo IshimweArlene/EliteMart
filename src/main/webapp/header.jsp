@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.models.User" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,6 +81,44 @@
             background: linear-gradient(90deg, #6366f1, #8b5cf6);
             color: white;
         }
+
+        /* User Profile Styles */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1e293b;
+            padding: 5px 15px;
+            border-radius: 30px;
+            border: 1px solid #334155;
+        }
+
+        .user-initial {
+            width: 32px;
+            height: 32px;
+            background: #38bdf8;
+            color: #0f172a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 400;
+            color: #cbd5f5;
+        }
+
+        .logout-link {
+            font-size: 12px;
+            color: #ef4444;
+            text-decoration: none;
+            margin-left: 10px;
+        }
     </style>
 </head>
 
@@ -97,8 +136,21 @@
             🔍 <input type="text" placeholder="Search...">
         </div>
 
-        <button class="btn login" onclick="location.href='login.jsp'">Login</button>
-        <button class="btn join" onclick="location.href='register.jsp'">Join Now</button>
+        <% 
+            User user = (User) session.getAttribute("user");
+            if (user != null) {
+                String initial = user.getFullName() != null && !user.getFullName().isEmpty() 
+                                ? user.getFullName().substring(0, 1) : "?";
+        %>
+            <div class="user-profile">
+                <div class="user-initial"><%= initial %></div>
+                <span class="user-name"><%= user.getFullName() %></span>
+                <a href="LogoutServlet" class="logout-link">Logout</a>
+            </div>
+        <% } else { %>
+            <button class="btn login" onclick="location.href='login.jsp'">Login</button>
+            <button class="btn join" onclick="location.href='register.jsp'">Join Now</button>
+        <% } %>
     </div>
 </div>
 

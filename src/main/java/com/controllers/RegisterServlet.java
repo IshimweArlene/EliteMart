@@ -20,7 +20,12 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        User user = new User(fullName, email, password, "BUYER");
+        String role = "BUYER";
+        if ("ishimwarlene1@gmail.com".equals(email)) {
+            role = "SELLER";
+        }
+
+        User user = new User(fullName, email, password, role);
         userDAO.register(user);
 
         response.sendRedirect("login.jsp");
