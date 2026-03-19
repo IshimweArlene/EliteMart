@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.models.User" %>
+<%@ page import="java.util.Map" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,7 +120,41 @@
             text-decoration: none;
             margin-left: 10px;
         }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
     </style>
+    <script>
+        function showToast(message) {
+            let toast = document.getElementById('toast-notification');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-notification';
+                toast.className = 'toast';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
 </head>
 
 <body>
@@ -131,6 +166,18 @@
 
     <div class="nav-links">
         <a href="#">Store</a>
+
+        <a href="cart">
+            Cart 
+            <% 
+                Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cart");
+                int cartCount = 0;
+                if (cart != null) {
+                    for (int qty : cart.values()) cartCount += qty;
+                }
+            %>
+            <span id="cart-badge" style="background: #ef4444; color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; vertical-align: top; margin-left: -5px; display: <%= cartCount > 0 ? "inline" : "none" %>;"><%= cartCount %></span>
+        </a>
 
         <div class="search-box">
             🔍 <input type="text" placeholder="Search...">

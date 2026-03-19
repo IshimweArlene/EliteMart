@@ -1,6 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <jsp:include page="header.jsp" />
 
+<%
+    String selectedCategory = (String) request.getAttribute("selectedCategory");
+    if (selectedCategory == null) selectedCategory = "All Categories";
+    
+    String minPrice = (String) request.getAttribute("minPrice");
+    String maxPrice = (String) request.getAttribute("maxPrice");
+    String sortBy = (String) request.getAttribute("sortBy");
+    
+    String[] categories = {"All Categories", "Electronics", "Home Appliances", "Fashion", "Books", "Hobbies", "Beauty", "Home Decor", "Furniture"};
+%>
+
 <style>
     .page-layout {
         display: flex;
@@ -16,8 +27,8 @@
     input[type=number] { -moz-appearance: textfield; appearance: textfield; }
 
     .sidebar {
-        width: 220px;
-        min-width: 220px;
+        width: 260px;
+        min-width: 260px;
         background: #0f172a;
         padding: 28px 20px;
         border-right: 1px solid #1e293b;
@@ -142,42 +153,40 @@
 
     <!-- Sidebar Filter -->
     <aside class="sidebar">
-
-        <div class="sidebar-section">
-            <h4>Categories</h4>
-            <ul class="category-list">
-                <li class="active">All Categories</li>
-                <li>Electronics</li>
-                <li>Home Appliances</li>
-                <li>Fashion</li>
-                <li>Books</li>
-                <li>Hobbies</li>
-                <li>Beauty</li>
-                <li>Home Decor</li>
-                <li>Furniture</li>
-            </ul>
-        </div>
-
-        <div class="sidebar-section">
-            <h4>Price Range</h4>
-            <div class="price-inputs">
-                <input type="number" placeholder="Min">
-                <input type="number" placeholder="Max">
+        <form action="products" method="GET" id="filterForm">
+            <input type="hidden" name="category" id="categoryInput" value="<%= selectedCategory %>">
+            
+            <div class="sidebar-section">
+                <h4>Categories</h4>
+                <ul class="category-list">
+                    <% for (String cat : categories) { %>
+                        <li class="<%= cat.equalsIgnoreCase(selectedCategory) ? "active" : "" %>" 
+                            onclick="setCategory('<%= cat %>')">
+                            <%= cat %>
+                        </li>
+                    <% } %>
+                </ul>
             </div>
-            <button class="btn-apply">Apply Filters</button>
-        </div>
 
-        <div class="sidebar-section">
-            <h4>Sort By</h4>
-            <select class="sort-select">
-                <option>Default</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Newest First</option>
-                <option>Most Popular</option>
-            </select>
-        </div>
+            <div class="sidebar-section">
+                <h4>Price Range</h4>
+                <div class="price-inputs">
+                    <input type="number" name="minPrice" placeholder="Min" value="<%= minPrice != null ? minPrice : "" %>">
+                    <input type="number" name="maxPrice" placeholder="Max" value="<%= maxPrice != null ? maxPrice : "" %>">
+                </div>
+                <button type="submit" class="btn-apply">Apply Filters</button>
+            </div>
 
+            <div class="sidebar-section">
+                <h4>Sort By</h4>
+                <select name="sortBy" class="sort-select" onchange="this.form.submit()">
+                    <option value="Default" <%= "Default".equals(sortBy) ? "selected" : "" %>>Default</option>
+                    <option value="Price: Low to High" <%= "Price: Low to High".equals(sortBy) ? "selected" : "" %>>Price: Low to High</option>
+                    <option value="Price: High to Low" <%= "Price: High to Low".equals(sortBy) ? "selected" : "" %>>Price: High to Low</option>
+                    <option value="Newest First" <%= "Newest First".equals(sortBy) ? "selected" : "" %>>Newest First</option>
+                </select>
+            </div>
+        </form>
     </aside>
 
     <!-- Main Content Area -->
@@ -186,3 +195,10 @@
     </main>
 
 </div>
+
+<script>
+    function setCategory(cat) {
+        document.getElementById('categoryInput').value = cat;
+        document.getElementById('filterForm').submit();
+    }
+</script>
